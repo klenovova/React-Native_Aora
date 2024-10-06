@@ -3,7 +3,7 @@ import { Text, View, Pressable } from 'react-native'
 
 interface CustomButtonProps {
   title: string;
-  handlePress: () => void;
+  handlePress: any;
   containerStyles?: string;
   textStyles?: string;
   isLoading?: boolean;
