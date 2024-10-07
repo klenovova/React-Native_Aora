@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { ScrollView, Text, View, Image } from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
+import { ScrollView, Text, View, Image, LogBox } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { images } from '@/constants'
@@ -15,9 +15,35 @@ const SignUp = () => {
     password: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const formRef = useRef(form);
 
-  const submit = () => {
+  useEffect(() => {
+    formRef.current = form;
+  }, [form]);
 
+  const submit = async () => {
+    try {
+      const rawResponse = await fetch(`https://172.25.208.1:3000/auth/signup`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formRef.current.username,
+          email: formRef.current.email,
+          password: formRef.current.password,
+          avatar: "teste"
+        })
+      });
+      const user = await rawResponse.json();
+
+      console.log(user);
+      
+    } catch (error) {
+      console.log("error: " + error)
+      throw error
+    }
   }
 
   return (
@@ -35,14 +61,14 @@ const SignUp = () => {
           <FormField
             title="Username"
             value={form.username}
-            handleChangeText={(e: any) => setForm({...form, username: e})}
+            handleChangeText={(e: any) => setForm(prev => ({ ...prev, username: e }))}
             otherStyles="mt-10"
           />
 
           <FormField
             title="Email"
             value={form.email}
-            handleChangeText={(e: any) => setForm({...form, email: e})}
+            handleChangeText={(e: any) => setForm(prev => ({ ...prev, email: e }))}
             otherStyles="mt-7"
             keyboardType="email-address"
           />
@@ -50,7 +76,7 @@ const SignUp = () => {
           <FormField
             title="Password"
             value={form.password}
-            handleChangeText={(e: any) => setForm({...form, password: e})}
+            handleChangeText={(e: any) => setForm(prev => ({ ...prev, password: e }))}
             otherStyles="mt-7"
           />
 

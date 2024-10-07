@@ -8,7 +8,7 @@ interface FormFieldProps {
   title: string;
   value: any;
   placeholder?: string;
-  handleChangeText: (e: any) => void;
+  handleChangeText: any;
   otherStyles?: string;
   keyboardType?: string;
 }
