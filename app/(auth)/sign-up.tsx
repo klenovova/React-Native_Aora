@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { ScrollView, Text, View, Image, LogBox } from 'react-native'
+import { ScrollView, Text, View, Image, LogBox, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { images } from '@/constants'
 import FormField from '@/components/FormField'
 import CustomButton from '@/components/CustomButton'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
+import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useGlobalContext } from '@/context/GlobalProvider'
 
 
 const SignUp = () => {
@@ -17,32 +20,40 @@ const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const formRef = useRef(form);
 
+  const {setUser, setIsLoggedIn} = useGlobalContext()
+
   useEffect(() => {
     formRef.current = form;
   }, [form]);
 
   const submit = async () => {
-    try {
-      const rawResponse = await fetch(`https://172.25.208.1:3000/auth/signup`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: formRef.current.username,
-          email: formRef.current.email,
-          password: formRef.current.password,
-          avatar: "teste"
-        })
-      });
-      const user = await rawResponse.json();
+    if(!formRef.current.username || !formRef.current.email || !formRef.current.password) {
+      Alert.alert("Error", "Please fill in al the fields")
+    }
 
-      console.log(user);
+    setIsSubmitting(true)
+
+    try {
+      // const { data } = await axios.post(`http://172.25.208.1:3000/auth/signup`, {
+      //   name: formRef.current.username,
+      //   email: formRef.current.email,
+      //   password: formRef.current.password,
+      //   avatar: "teste"
+      // })
       
-    } catch (error) {
-      console.log("error: " + error)
-      throw error
+      // await AsyncStorage.setItem("currentUser", JSON.stringify(data))
+      // setUser(data)
+      // setIsLoggedIn(true)
+
+      await AsyncStorage.setItem("currentUser", JSON.stringify({user: {name: "teste", email:"teste@gmail.com", token:"doaidiwaiodmwandosndown"}}))
+      setUser({user: {name: "teste", email:"teste@gmail.com", token:"doaidiwaiodmwandosndown"}})
+      setIsLoggedIn(true)
+
+      router.replace('/home')
+    } catch (error: any) {
+      Alert.alert("Error", error.message)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
