@@ -1,23 +1,32 @@
 import { icons } from "@/constants"
+import { ResizeMode, Video } from "expo-av"
 import { useState } from "react"
-import { Text, View, Image, Pressable } from "react-native"
+import { Text, View, Image, Pressable, ViewStyle } from "react-native"
 
-interface Creator {
+interface CreatorProps {
   username: string
   avatar: string
 }
 
-interface Video {
+interface VideoProps {
   video: {
     id: number
     title: string
     thumbnail: string
     video: string
-    creator: Creator
+    creator: CreatorProps
   }
 }
 
-const VideoCart = ({ video: {title, thumbnail, video, creator: {username, avatar}} }: Video) => {
+const videoStyle: ViewStyle = {
+  width: '100%',
+  height: 240,
+  borderRadius: 35,
+  marginTop: 12,
+  overflow: "hidden",
+};
+
+const VideoCart = ({ video: {title, thumbnail, video, creator: {username, avatar}} }: VideoProps) => {
   const [pressed, setPressed] = useState(false)
   const [play, setPlay] = useState(false) 
 
@@ -52,14 +61,23 @@ const VideoCart = ({ video: {title, thumbnail, video, creator: {username, avatar
       </View>
 
       {play? (
-        <Text>playing</Text>
+        <Video
+        source={{ uri: video }}
+        style={videoStyle}
+        resizeMode={ResizeMode.CONTAIN}
+        useNativeControls
+        shouldPlay
+        onPlaybackStatusUpdate={(status: any) => {
+          if (status.didJustFinish) {
+            setPlay(false)
+          }
+        }}
+      />
       ) : (
         <Pressable
           className={`w-full h-60 rounded-xl mt-3 relative justify-center items-center ${pressed ? 'opacity-70': ''}`}
-          onPressIn={() => {
-            setPressed(true)
-            setPlay(true)
-          }}
+          onPress={() => setPlay(true)}
+          onPressIn={() => setPressed(true)}
           onPressOut={() => setPressed(false)}
         >
           <Image

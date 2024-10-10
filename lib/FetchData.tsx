@@ -30,7 +30,7 @@ const useFetchData = (url: string, context?: any) => {
         id: 1,
         title: 'teste',
         thumbnail: 'https://messagetech.com/wp-content/themes/ml_mti/images/no-image.jpg',
-        video: 'teste',
+        video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
         creator: {
           username: 'Teste',
           avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5taINn-ULi-Gw1l5g7VkiDfkzm6btlLN_zpw-RyeFwsuiQBxrU45vQuc8ySnQes48TZ4&usqp=CAU'
@@ -40,7 +40,7 @@ const useFetchData = (url: string, context?: any) => {
         id: 2,
         title: 'teste',
         thumbnail: 'https://messagetech.com/wp-content/themes/ml_mti/images/no-image.jpg',
-        video: 'teste',
+        video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
         creator: {
           username: 'Teste',
           avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5taINn-ULi-Gw1l5g7VkiDfkzm6btlLN_zpw-RyeFwsuiQBxrU45vQuc8ySnQes48TZ4&usqp=CAU'
@@ -50,7 +50,7 @@ const useFetchData = (url: string, context?: any) => {
         id: 3,
         title: 'teste',
         thumbnail: 'https://messagetech.com/wp-content/themes/ml_mti/images/no-image.jpg',
-        video: 'teste',
+        video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         creator: {
           username: 'Teste',
           avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5taINn-ULi-Gw1l5g7VkiDfkzm6btlLN_zpw-RyeFwsuiQBxrU45vQuc8ySnQes48TZ4&usqp=CAU'
