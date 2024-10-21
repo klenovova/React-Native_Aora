@@ -8,9 +8,12 @@ import Trending from '@/components/Trending'
 import EmptyState from '@/components/EmptyState'
 import useFetchData from '@/lib/FetchData'
 import VideoCart from '@/components/VideoCard'
+import { useGlobalContext } from '@/context/GlobalProvider'
 
 const Home = () => {
   const {data: posts, refetch, isLoading} = useFetchData('http://google.com')
+
+  const { user, setUser, setIsLoggedIn } = useGlobalContext();
 
   const [search, setSearch] = useState()
   const [refreshing, setRefreshing] = useState(false)
@@ -35,10 +38,10 @@ const Home = () => {
               <View className='justify-between items-start flex-row mb-6'>
                 <View>
                   <Text className='font-pmedium text-sm text-gray-100'>
-                    Welcome Back
+                    Welcome Back,
                   </Text>
                   <Text className='text-2xl font-psemibold text-white'>
-                    Emanuel
+                    {user?.name || 'Emanuel'}
                   </Text>
                 </View>
 

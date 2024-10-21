@@ -42,8 +42,8 @@ const SignIn = () => {
       // setUser(data)
       // setIsLoggedIn(true)
       
-      await AsyncStorage.setItem("currentUser", JSON.stringify({user: {name: "teste", email:"teste@gmail.com", token:"doaidiwaiodmwandosndown"}}))
-      setUser({user: {name: "teste", email:"teste@gmail.com", token:"doaidiwaiodmwandosndown"}})
+      await AsyncStorage.setItem("currentUser", JSON.stringify({name: "teste", email:"teste@gmail.com", token:"doaidiwaiodmwandosndown"}))
+      setUser({name: "teste", email:"teste@gmail.com", token:"doaidiwaiodmwandosndown"})
       setIsLoggedIn(true)
 
       router.replace('/home')

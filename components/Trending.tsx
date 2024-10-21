@@ -115,7 +115,7 @@ const Trending: React.FC<TrendingProps> = ({ posts }) => {
       viewabilityConfig={{
         itemVisiblePercentThreshold: 70
       }}
-      contentOffset={{ x: 110, y: 0 }}
+      contentOffset={{ x: 145, y: 0 }}
       horizontal
     />
   )
