@@ -34,19 +34,17 @@ const SignUp = () => {
     setIsSubmitting(true)
 
     try {
-      // const { data } = await axios.post(`http://172.25.208.1:3000/auth/signup`, {
-      //   name: formRef.current.username,
-      //   email: formRef.current.email,
-      //   password: formRef.current.password,
-      //   avatar: "teste"
-      // })
+      const { data } = await axios.post(`http://192.168.100.106:3333/auth/signup`,
+        {
+          name: formRef.current.username,
+          email: formRef.current.email,
+          password: formRef.current.password,
+          avatar: "https://res.cloudinary.com/duheudj5m/image/upload/v1733785827/twp9qcahnicfykuaizo7.png"
+        }
+      )
       
-      // await AsyncStorage.setItem("currentUser", JSON.stringify(data))
-      // setUser(data)
-      // setIsLoggedIn(true)
-
-      await AsyncStorage.setItem("currentUser", JSON.stringify({name: "teste", email:"teste@gmail.com", token:"doaidiwaiodmwandosndown"}))
-      setUser({name: "teste", email:"teste@gmail.com", token:"doaidiwaiodmwandosndown"})
+      await AsyncStorage.setItem("currentUser", JSON.stringify(data))
+      setUser(data)
       setIsLoggedIn(true)
 
       router.replace('/home')

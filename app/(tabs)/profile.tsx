@@ -3,8 +3,6 @@ import { Alert, FlatList, Image, RefreshControl, Text, View } from 'react-native
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { icons } from '@/constants'
-import SearchInput from '@/components/SearchInput'
-import Trending from '@/components/Trending'
 import EmptyState from '@/components/EmptyState'
 import useFetchData from '@/lib/FetchData'
 import VideoCart from '@/components/VideoCard'
@@ -40,7 +38,7 @@ const Profile = () => {
         ListHeaderComponent={() => (
           <View className="w-full justify-center items-center mt-6 mb-12 px-4">
             <TouchableOpacity
-              style={{width: '100%', alignItems: 'flex-end', marginBottom: '40px'}}
+              style={{width: '100%', alignItems: 'flex-end', marginBottom: '40px'} as any}
               onPress={logout}
             >
               <Image
@@ -52,7 +50,7 @@ const Profile = () => {
 
             <View className="w-16 h-16 border border-secondary rounded-lg justify-center items-center">
               <Image
-                source={{uri: user?.avatar || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5taINn-ULi-Gw1l5g7VkiDfkzm6btlLN_zpw-RyeFwsuiQBxrU45vQuc8ySnQes48TZ4&usqp=CAU'}}
+                source={{uri: user?.avatar}}
                 className="w-[90%] h-[90%] rounded-lg"
                 resizeMode='cover'
               />

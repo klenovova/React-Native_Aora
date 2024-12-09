@@ -7,16 +7,19 @@ import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-na
 import { SafeAreaView } from 'react-native-safe-area-context'
 import * as DocumentPicker from 'expo-document-picker'
 import { router } from 'expo-router'
-
+import axios from 'axios'
+import { useGlobalContext } from '@/context/GlobalProvider'
 
 const Create = () => {
+  const { user } = useGlobalContext();
+
   const [uploading, setUploading] = useState(false)
   const [form, setForm] = useState({
     title: '',
     video: null,
     thumbnail: null,
     prompt: ''
-  })
+  } as any)
   const formRef = useRef(form);
 
   useEffect(() => {
@@ -34,7 +37,7 @@ const Create = () => {
       
       if(selectType === 'image') {
         setForm({...form, thumbnail: result.assets[0]})
-      }
+        }
 
       if(selectType === 'video') {
         setForm({...form, video: result.assets[0]})
@@ -48,7 +51,41 @@ const Create = () => {
     }
     setUploading(true)
 
+
     try {
+      const formData = new FormData()
+
+      const imageData = {
+        name: formRef.current.thumbnail.name,
+        uri: formRef.current.thumbnail.uri,
+        type: formRef.current.thumbnail.mimeType,
+        size: formRef.current.thumbnail.size
+      }
+      formData.append('image', imageData as any)
+
+      const videoData = {
+        name: formRef.current.video.name,
+        uri: formRef.current.video.uri,
+        type: formRef.current.video.mimeType,
+        size: formRef.current.video.size
+      }
+      formData.append('video', videoData as any)
+      formData.append('title', formRef.current.title)
+      formData.append('prompt', formRef.current.prompt)
+      formData.append('creatorId', user.id)
+
+      console.log(formData)
+
+      const { data } = await axios.post(`http://192.168.100.106:3333/videos/new`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            authorization: `Bearer ${user.token}`
+          }
+        }
+      )
+
       Alert.alert("Success", "Post uploaded successfully")
       router.push('/home')
     } catch (error: any) {
@@ -56,8 +93,8 @@ const Create = () => {
     } finally {
       setForm({
         title: '',
-        video: null,
-        thumbnail: null,
+        video: '',
+        thumbnail: '',
         prompt: ''
       })
 

@@ -11,9 +11,20 @@ import VideoCart from '@/components/VideoCard'
 import { useGlobalContext } from '@/context/GlobalProvider'
 
 const Home = () => {
-  const {data: posts, refetch, isLoading} = useFetchData('http://google.com')
-
   const { user, setUser, setIsLoggedIn } = useGlobalContext();
+  console.log(user);
+  
+
+  const {data: posts, refetch} = useFetchData('/videos/all', {
+    headers: {
+      authorization: `Bearer ${user.token}`
+    }
+  })
+  const {data: latestPosts} = useFetchData('/videos/latest', {
+    headers: {
+      authorization: `Bearer ${user.token}`
+    }
+  })
 
   const [search, setSearch] = useState()
   const [refreshing, setRefreshing] = useState(false)
@@ -62,7 +73,7 @@ const Home = () => {
                 </Text>
                 
                 <Trending
-                  posts={posts}
+                  posts={latestPosts}
                 />
               </View>
             </View>

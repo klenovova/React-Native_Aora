@@ -8,6 +8,7 @@ import CustomButton from '@/components/CustomButton'
 import { Link, router } from 'expo-router'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useGlobalContext } from '@/context/GlobalProvider'
+import axios from 'axios'
 
 
 const SignIn = () => {
@@ -32,18 +33,13 @@ const SignIn = () => {
     setIsSubmitting(true)
 
     try {
-      // const { data } = await axios.post(`http://172.25.208.1:3000/auth/signup`, {
-      //   email: formRef.current.email,
-      //   password: formRef.current.password,
-      //   avatar: "teste"
-      // })
+      const { data } = await axios.post(`http://192.168.100.106:3333/auth/signin`, {
+        email: formRef.current.email,
+        password: formRef.current.password,
+      })
 
-      // await AsyncStorage.setItem("currentUser", JSON.stringify(data))
-      // setUser(data)
-      // setIsLoggedIn(true)
-      
-      await AsyncStorage.setItem("currentUser", JSON.stringify({name: "teste", email:"teste@gmail.com", token:"doaidiwaiodmwandosndown"}))
-      setUser({name: "teste", email:"teste@gmail.com", token:"doaidiwaiodmwandosndown"})
+      await AsyncStorage.setItem("currentUser", JSON.stringify(data))
+      setUser(data)
       setIsLoggedIn(true)
 
       router.replace('/home')
